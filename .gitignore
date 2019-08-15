@@ -19,3 +19,4 @@ ingestion/scalastyle-output.xml
 schema/scalastyle-output.xml
 *.swp
 doc/.vscode
+.idea
