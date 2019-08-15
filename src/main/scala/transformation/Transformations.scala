@@ -1,0 +1,6 @@
+package transformation
+
+import transformation.transformations.column.Base64.Base64Instance
+import transformation.transformations.row.Select.SelectInstance
+
+object Transformations extends Base64Instance with SelectInstance
