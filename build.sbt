@@ -4,7 +4,7 @@ version := "0.1"
 
 scalaVersion :=  "2.11.8"
 
-val sparkVersion = "2.3.1"
+val sparkVersion = "2.2.1"
 val catsVersion="1.6.0"
 
 libraryDependencies ++= Seq(
