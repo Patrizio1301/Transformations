@@ -5,6 +5,7 @@ import java.net.URL
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, FunSuite}
+import utils.test.KirbySuiteContextProvider
 
 trait InitSparkSessionFunSuite extends FunSuite with BeforeAndAfterAll with BeforeAndAfterEach {
 

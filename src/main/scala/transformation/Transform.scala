@@ -1,12 +1,11 @@
 package transformation
 
-import org.apache.spark.sql.{Column, DataFrame}
-import org.apache.spark.sql.functions.lit
-import transformation.errors.TransformationError
-import com.typesafe.scalalogging.LazyLogging
 import cats.implicits._
+import com.typesafe.scalalogging.LazyLogging
+import org.apache.spark.sql.functions.lit
+import org.apache.spark.sql.{Column, DataFrame}
 import transformation.transformations.ColumnTransformation
-import shapeless._
+import transformation.errors._
 
 import scala.util.{Failure, Success, Try}
 
@@ -39,34 +38,6 @@ object Transform extends LazyLogging {
           dfTfm(a.asInstanceOf[ColumnTransformation].field, df, col, a))
   }
 
-  implicit val cnilTransform: Transform[CNil] =
-    new Transform[CNil] {
-      override def transform(t: CNil)(
-          df: DataFrame): Either[TransformationError, DataFrame] = df.asRight
-    }
-
-  implicit def coproductConsTransform[L, R <: Coproduct](
-      implicit
-      lch: Transform[L],
-      rch: Transform[R]): Transform[L :+: R] =
-    new Transform[L :+: R] {
-      override def transform(t: L :+: R)(
-          df: DataFrame): Either[TransformationError, DataFrame] = t match {
-        case Inl(l) => lch.transform(l)(df)
-        case Inr(r) => rch.transform(r)(df)
-      }
-    }
-
-  implicit def genericCommandHandler[A, G](
-      implicit
-      gen: Generic.Aux[A, G],
-      cch: Lazy[Transform[G]]): Transform[A] =
-    new Transform[A] {
-      def transform(a: A)(
-          df: DataFrame): Either[TransformationError, DataFrame] =
-        cch.value.transform(gen.to(a))(df)
-    }
-
   def instance[A](
       func: (A, DataFrame) => Either[TransformationError, DataFrame])
     : Transform[A] =
@@ -74,6 +45,7 @@ object Transform extends LazyLogging {
       def transform(a: A)(
           df: DataFrame): Either[TransformationError, DataFrame] = func(a, df)
     }
+
 
   implicit class TransformOps[A: Transform](a: A) {
     def transform(df: DataFrame): Either[TransformationError, DataFrame] =

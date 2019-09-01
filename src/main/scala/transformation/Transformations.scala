@@ -1,6 +1,6 @@
 package transformation
 
-import transformation.transformations.column.Base64.Base64Instance
-import transformation.transformations.row.Select.SelectInstance
+import transformation.transformations.column.Base64Imp.Base64Instance
+import transformation.transformations.row.SelectImp.SelectInstance
 
 object Transformations extends Base64Instance with SelectInstance

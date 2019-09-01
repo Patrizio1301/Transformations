@@ -1,13 +1,10 @@
 package transformation.transformations
 
-import pureconfig._
-import transformation.ParamValidator
 import com.typesafe.config.Config
 import pureconfig.generic.{FieldCoproductHint, ProductHint}
-import cats.implicits._
-import shapeless.Generic
 import pureconfig._
 import pureconfig.error.ConfigReaderFailures
+import transformation.ParamValidator
 
 sealed trait Transformation
 
@@ -20,30 +17,17 @@ final case class Base64(
   def validate: Either[String, Base64] = ???
 }
 
-final case class Select(
+final case class SelectColumns(
     columnsToSelect: Seq[String]
-) extends ParamValidator[Select]
+) extends ParamValidator[SelectColumns]
     with Transformation {
-  def validate: Either[String, Select] = ???
+  def validate: Either[String, SelectColumns] = ???
 }
 
 
 object TransformationUtils extends TransformationUtils
 
 class TransformationUtils {
-
-  class TransformationInput[+A](value: A)
-
-  val generic = Generic[Transformation]
-
-
-//  def getType[T<:Transformation](config: ConfigReader.Result[TransformationInput[T]]): Any= {
-//    config.flatMap { transform => transform match {
-//          case t: Base64 => t
-//          case t: Select => t
-//        }
-//    }
-//  }
 
   def getTransformation[T<:Transformation](config: Config): Either[ConfigReaderFailures, Transformation] = {
     implicit val hint = ProductHint[Transformation](useDefaultArgs = true)

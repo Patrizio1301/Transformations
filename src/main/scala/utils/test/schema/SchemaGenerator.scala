@@ -2,6 +2,7 @@ package utils.test.schema
 
 import utils.test.schema.SchemaUtils.{MetaData, Schema, SchemaField}
 import org.apache.spark.sql.types.{DataType, StructType}
+import utils.test.schema.SchemaUtils.MetaData
 
 object SchemaGenerator {
   implicit def flatSchemaToStructType(fs: FlatSchema): StructType = fs.build()

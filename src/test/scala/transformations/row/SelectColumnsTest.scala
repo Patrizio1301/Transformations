@@ -5,11 +5,11 @@ import org.apache.spark.sql.{AnalysisException, Row}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{GivenWhenThen, Matchers}
-import transformation.transformations.Select
-import utils.test.InitSparkSessionFunSuite
+import transformation.transformations.SelectColumns
 import cats.implicits._
 import transformation.Transform._
 import transformation.Transformations._
+import utils.test.InitSparkSessionFunSuite
 import utils.test.schema.SchemaModels._
 
 @RunWith(classOf[JUnitRunner])
@@ -28,7 +28,7 @@ class SelectColumnsTest
 
     val columnsToSelect = Seq("B", "C", "E")
 
-    val result = Select(columnsToSelect = columnsToSelect).transform(df)
+    val result = SelectColumns(columnsToSelect = columnsToSelect).transform(df)
 
     result.isRight shouldBe true
 
@@ -49,7 +49,7 @@ class SelectColumnsTest
     val df = createDataFrame(content, inputSchema(5, StringType))
 
     assertThrows[AnalysisException](
-      Select(Seq("notExist")).transform(df)
+      SelectColumns(Seq("notExist")).transform(df)
     )
   }
 
@@ -60,7 +60,7 @@ class SelectColumnsTest
       content,
       nestedSchema(Seq(StringType, StringType, StringType), Seq(3, 3, 1)))
 
-    val result = Select(
+    val result = SelectColumns(
       Seq(s"$FIELD_1.$FIELD_1.$FIELD_1", s"$FIELD_2", s"$FIELD_1.$FIELD_3"))
       .transform(df)
 

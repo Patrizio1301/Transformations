@@ -1,8 +1,8 @@
 package utils.test.schema
 
-import utils.test.schema.SchemaUtils.MetaData
 import utils.test.schema.SchemaGenerator._
 import org.apache.spark.sql.types._
+import utils.test.schema.SchemaUtils.MetaData
 
 object SchemaModels {
 

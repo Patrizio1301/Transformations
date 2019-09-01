@@ -1,14 +1,14 @@
 package transformation.transformations.column
 
-
 import org.apache.spark.sql.Column
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.StringType
 import transformation.errors.{ConversionError, TransformationError}
-import transformation.{Parameters, Transform}
 import transformation.transformations.Base64
 import transformation.Transform._
 import cats.implicits._
+import transformation.{Parameters, Transform}
+import transformation.Transform
 
 
 /** Return column with default value.
@@ -16,7 +16,7 @@ import cats.implicits._
   * @param config config for literal masterization.
   */
 
-object Base64 extends Parameters {
+object Base64Imp extends Parameters {
   object Base64Instance extends Base64Instance
 
   trait Base64Instance {
