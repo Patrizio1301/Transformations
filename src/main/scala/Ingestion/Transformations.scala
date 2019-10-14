@@ -28,17 +28,17 @@ trait Transformations {
       dfI: DataFrame,
       transformations: Seq[Transformation]
   )(implicit spark: SparkSession): Either[Any, DataFrame] = {
-    transformations.foldLeft(Right(dfI): Either[TransformationError, DataFrame]) {
-      (df, transformation) =>
-        df.flatMap { dfnext =>
-          CommandHandlerRunner.transform(transformation)(dfnext)
-        }
-    }
-//    println(reify(Transform[Base64]))
-//    println(reify(Transform[SelectColumns]))
-//    Transform[Base64]
-//    Transform[SelectColumns]
-//    null
+//    transformations.foldLeft(Right(dfI): Either[TransformationError, DataFrame]) {
+//      (df, transformation) =>
+//        df.flatMap { dfnext =>
+//          CommandHandlerRunner.transform(transformation)(dfnext)
+//        }
+//    }
+    println(reify(Transform[Base64]))
+    println(reify(Transform[SelectColumns]))
+    Transform[Base64]
+    Transform[SelectColumns]
+    null
   }
 
   import scala.collection.JavaConverters._

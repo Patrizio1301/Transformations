@@ -46,7 +46,6 @@ object Transform extends LazyLogging {
           df: DataFrame): Either[TransformationError, DataFrame] = func(a, df)
     }
 
-
   implicit class TransformOps[A: Transform](a: A) {
     def transform(df: DataFrame): Either[TransformationError, DataFrame] =
       Transform[A].transform(a)(df)
