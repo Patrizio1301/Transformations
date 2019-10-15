@@ -18,15 +18,15 @@ object GenericInstance {
   ): Aux[L :+: R, LL :+: RR] =
     instance(
       {
-        case (Inl(l), Inl(ll)) => lch.lessThenOrEqual(l, ll)
-        case (Inl(l), Inr(rr)) => lch1.lessThenOrEqual(l, rr)
-        case (Inr(r), b) => rch.lessThenOrEqual(r, b)
-        case (Inr(r), Inr(rr)) => rch1.lessThenOrEqual(r, rr)
+        case (Inl(l), Inl(ll)) => lch.lessThanOrEqual(l, ll)
+        case (Inl(l), Inr(rr)) => lch1.lessThanOrEqual(l, rr)
+        case (Inr(r), b) => rch.lessThanOrEqual(r, b)
+        case (Inr(r), Inr(rr)) => rch1.lessThanOrEqual(r, rr)
       }, {
-        case (Inl(l), Inl(bl)) => lch.moreThenOrEqual(l, bl)
+        case (Inl(l), Inl(bl)) => lch.moreThanOrEqual(l, bl)
         case (Inl(l), Inr(br)) => false
         case (Inr(r), Inl(bl)) => false
-        case (Inr(r), Inr(br)) => rch1.moreThenOrEqual(r, br)
+        case (Inr(r), Inr(br)) => rch1.moreThanOrEqual(r, br)
       }
     )
 
@@ -36,8 +36,8 @@ object GenericInstance {
                                                      gen1: Generic.Aux[B, BRepr],
                                                      cch: Lazy[Aux[ARepr, BRepr]]): Aux[A, B] =
     instance(
-      (a, b) => cch.value.lessThenOrEqual(gen.to(a), gen1.to(b)),
-      (a, b) => cch.value.moreThenOrEqual(gen.to(a), gen1.to(b))
+      (a, b) => cch.value.lessThanOrEqual(gen.to(a), gen1.to(b)),
+      (a, b) => cch.value.moreThanOrEqual(gen.to(a), gen1.to(b))
     )
 
 }

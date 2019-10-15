@@ -3,25 +3,26 @@ package validation.validations
 import validation.ColumnValidation
 import utils.NumberLike.NumberLikeConverter
 import utils.NumberLike.NumberLikeType._
+import shapeless.CNil
 
 sealed trait ValidationUnits
 
-final case class RangeCase[A](
+final case class RangeCase(
     field: String,
     min: NumberLikeType,
     max: NumberLikeType
-) extends validation.ParamValidator[RangeCase[A]]
+) extends validation.ParamValidator[RangeCase]
     with ColumnValidation
     with ValidationUnits {
-  def validation: Either[String, RangeCase[A]] = ???
+  def validation: Either[String, RangeCase] = ???
 }
 
 object RangeCase {
   def apply[A: NumberLikeConverter, B: NumberLikeConverter](
       field: String,
-      min: A,
-      max: B): RangeCase[A] = {
-    new RangeCase[A](field,
+      min: A ,
+      max: B ): RangeCase = {
+    new RangeCase(field,
                      implicitly[NumberLikeConverter[A]].apply(min),
                      implicitly[NumberLikeConverter[B]].apply(max))
   }
