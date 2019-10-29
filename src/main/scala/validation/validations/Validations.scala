@@ -5,6 +5,8 @@ import utils.NumberLike.NumberLikeConverter
 import utils.NumberLike.NumberLikeType._
 import shapeless.CNil
 
+import scala.runtime.Nothing$
+
 sealed trait ValidationUnits
 
 final case class RangeCase(
@@ -20,8 +22,8 @@ final case class RangeCase(
 object RangeCase {
   def apply[A: NumberLikeConverter, B: NumberLikeConverter](
       field: String,
-      min: A ,
-      max: B ): RangeCase = {
+      min: A =null,
+      max: B =null): RangeCase = {
     new RangeCase(field,
                      implicitly[NumberLikeConverter[A]].apply(min),
                      implicitly[NumberLikeConverter[B]].apply(max))

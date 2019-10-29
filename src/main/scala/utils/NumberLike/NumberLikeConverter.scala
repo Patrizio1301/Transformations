@@ -1,6 +1,6 @@
 package utils.NumberLike
 
-import shapeless.Coproduct
+import shapeless.{CNil, Coproduct}
 import utils.NumberLike.NumberLikeType.NumberLikeType
 
 trait NumberLikeConverter[A] {
@@ -9,9 +9,9 @@ trait NumberLikeConverter[A] {
 
 object NumberLikeConverter {
 
-//  implicit object nullToNumberLike extends NumberLikeConverter[Null] {
-//    def apply(n: Null): NumberLikeType = Coproduct[NumberLikeType](n)
-//  }
+  implicit object nullToNumberLike extends NumberLikeConverter[Null] {
+    def apply(n: Null): NumberLikeType = Coproduct[NumberLikeType](n)
+  }
 
   implicit object IntToNumberLike extends NumberLikeConverter[Int] {
     def apply(n: Int): NumberLikeType = Coproduct[NumberLikeType](n)
